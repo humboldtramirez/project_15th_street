@@ -1,0 +1,14 @@
+language: python
+sudo: false
+cache: false
+python:
+    - '3.7'
+install:
+  - pip install -r requirements-tests.txt
+
+script:
+  - coverage erase
+  - tox
+after_success:
+  - coverage combine
+  - coveralls
