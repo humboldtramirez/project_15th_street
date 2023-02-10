@@ -44,6 +44,9 @@ For a more in-depth explanation please refer to  the [official documentation](ht
 ```bash
 python manage.py runserver
 ```
+optional arguments:
+-p 
+: port number.  default is 5000
 
 
 ## Check the result
