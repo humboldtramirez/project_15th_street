@@ -2,6 +2,7 @@ pyms:
   services:
     requests:
       data: ""
+      propagate_headers: true
     swagger:
         path: "swagger"
         file: "swagger.yaml"
@@ -13,7 +14,8 @@ pyms:
         component_name: "Project 15th Street"
     metrics: true
     
-
+  crypt:
+    method: "fernet"
   config:
     ENV: development
     DEBUG: false
@@ -22,5 +24,5 @@ pyms:
     APPLICATION_ROOT: /project_15th_street
     SQLALCHEMY_TRACK_MODIFICATIONS: true
     SECRET_KEY: b'gjr39dkjn344_!67#'
-    DATABASE: db.sqlite3
-    SQLALCHEMY_DATABASE_URI: sqlite:///db.sqlite3
+    DATABASE: smart_charger_dev
+    ENC_SQLALCHEMY_DATABASE_URI: gAAAAABj9IrdYa-Tcr5dv3NCi6V472BfZrVDLb4QgYlW7NfBmzLX67tT8JabUVqYJ-3szyt5sHzt73S3l_KAMHs_X0ZdT1vc4pdYRkXKgodSCbhdeanrCMxnEUUkhqrvcyffImJCFGpIjIy7FP1UiHt91Ao-DKl9h0rqjz3EfBDwbZz99nakd6F2H89FkY4Dz6JlCjk2xtWU
