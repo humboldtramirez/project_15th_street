@@ -104,5 +104,5 @@ ENV/
 
 flake8Report.txt
 pylintReport.txt
-db.sqlite3
+*.sqlite3
 _build

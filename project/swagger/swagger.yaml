@@ -59,6 +59,108 @@ paths:
           schema:
             $ref: '#/definitions/dummy_msg'
       x-swagger-router-controller: "project.views.views"
+  /battery-status:
+    get:
+      tags:
+      - "Battery View"
+      summary: "Gets Battery Status"
+      description: ""
+      operationId: "get_battery_status"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "A detail view with a message"
+          schema:
+            $ref: '#/definitions/dummy_msg'
+      x-swagger-router-controller: "project.views.views"
+  /manage-vehicle:
+    get:
+      tags:
+      - "Vehicle View"
+      summary: "Manage Vehicle Charging"
+      description: ""
+      operationId: "manage_vehicle"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "A detail view with a message"
+          schema:
+            $ref: '#/definitions/dummy_msg'
+      x-swagger-router-controller: "project.views.views"
+  /set-charging-amps:
+    get:
+      tags:
+      - "Amps View"
+      summary: "Sets charging amps"
+      description: ""
+      operationId: "set_charging_amps"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "A detail view with a message"
+          schema:
+            $ref: '#/definitions/dummy_msg'
+      x-swagger-router-controller: "project.views.views"
+  /start-poll:
+    get:
+      tags:
+      - "Poll View"
+      summary: "Starts polling smart charger service"
+      description: ""
+      operationId: "start_poll"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "A detail view with a message"
+          schema:
+            $ref: '#/definitions/dummy_msg'
+      x-swagger-router-controller: "project.views.views"
+  /status-poll:
+    get:
+      tags:
+      - "Poll View"
+      summary: "Status polling smart charger service"
+      description: ""
+      operationId: "status_poll"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "A detail view with a message"
+          schema:
+            $ref: '#/definitions/dummy_msg'
+      x-swagger-router-controller: "project.views.views"
+  /stop-poll:
+    get:
+      tags:
+      - "Poll View"
+      summary: "Stops polling smart charger service"
+      description: ""
+      operationId: "stop_poll"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "A detail view with a message"
+          schema:
+            $ref: '#/definitions/dummy_msg'
+      x-swagger-router-controller: "project.views.views"
 definitions:
   dummy_msg:
     type: "object"
