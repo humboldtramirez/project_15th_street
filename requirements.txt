@@ -6,7 +6,7 @@ botocore==1.29.75 ; python_version >= '3.7'
 certifi==2022.12.7 ; python_version >= '3.6'
 cffi==1.15.1
 chardet==4.0.0 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
-charset-normalizer==3.0.1 ; python_full_version >= '3.6.0'
+charset-normalizer==3.0.1
 click==7.1.2 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
 clickclick==20.10.2
 connexion[swagger-ui]==2.14.2
@@ -16,7 +16,7 @@ flask==1.1.4
 flask-opentracing==1.1.0
 flask-script==2.0.6
 flask-sqlalchemy==2.5.1
-future==0.18.3 ; python_version >= '2.6' and python_version not in '3.0, 3.1, 3.2, 3.3'
+future==0.18.3 ; python_version >= '2.6' and python_version not in '3.0, 3.1, 3.2'
 greenlet==2.0.2 ; python_version >= '3'
 idna==3.4 ; python_version >= '3.5'
 importlib-metadata==4.2.0
@@ -27,11 +27,11 @@ jaeger-client==4.8.0
 jinja2==2.11.3 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
 jmespath==1.0.1 ; python_version >= '3.7'
 jsonschema==4.17.3 ; python_version >= '3.7'
-mariadb==1.1.5.post3
+mariadb==1.1.6
 markupsafe==2.0.1
 marshmallow==3.8.0
 marshmallow-sqlalchemy==0.28.1
-openapi-schema-validator==0.2.3 ; python_version >= '3.7' and python_full_version < '4.0.0'
+openapi-schema-validator==0.2.3 ; python_full_version >= '3.7.0' and python_full_version < '4.0.0'
 openapi-spec-validator==0.4.0
 opentracing==2.4.0
 opentracing-instrumentation==3.3.1
@@ -43,16 +43,16 @@ prometheus-client==0.16.0
 py-ms[all]==2.7.0
 pycparser==2.21
 pyrsistent==0.19.3 ; python_version >= '3.7'
-python-dateutil==2.8.2 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
-python-json-logger==2.0.6 ; python_version >= '3.6'
+python-dateutil==2.8.2 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2'
+python-json-logger==2.0.7 ; python_version >= '3.6'
 pyyaml==6.0 ; python_version >= '3.6'
 requests==2.28.2
 ruamel.yaml==0.17.21 ; python_version >= '3'
-ruamel.yaml.clib==0.2.7 ; python_version < '3.11' and platform_python_implementation == 'CPython'
+ruamel.yaml.clib==0.2.7 ; platform_python_implementation == 'CPython' and python_version < '3.11'
 s3transfer==0.6.0 ; python_version >= '3.7'
 semver==2.13.0
 setuptools==67.3.3 ; python_version >= '3.7'
-six==1.16.0 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+six==1.16.0 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2'
 sqlalchemy==1.4.3
 swagger-ui-bundle==0.0.9
 threadloop==1.0.2

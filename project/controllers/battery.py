@@ -28,13 +28,12 @@ class Battery:
         reserved_pack_energy_watt = self.battery_model.get_reserved_pack_energy()
         self.features['reserved_pack_energy_watt'] = reserved_pack_energy_watt
 
-        # TODO:  Consider buffer to prevent grid import
-        buffer_watt = 0
+        # 'energy_left' value seems to update every 5 minutes so add W buffer to avoid pulling from grid before update
+        buffer_watt = (DISCHARGE_MAX_W // 60) * 5
         reserve_energy_watt = reserved_pack_energy_watt + buffer_watt
         self.features['reserve_energy_watt'] = reserve_energy_watt
 
-        # 'energy_left' value seems to update every 5 minutes so add W buffer to avoid pulling from grid before update
-        is_battery_watt_available = energy_left_watts > reserve_energy_watt + (DISCHARGE_MAX_W // 60) * 5
+        is_battery_watt_available = energy_left_watts > reserve_energy_watt
         available_battery_power_watts = DISCHARGE_MAX_W if is_battery_watt_available else 0
         self.features['available_battery_power_watts'] = available_battery_power_watts
         return available_battery_power_watts

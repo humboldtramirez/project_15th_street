@@ -7,7 +7,8 @@ RECOMMENDED_RESERVE_PACK_ENERGY_W = int(TOTAL_PACK_ENERGY_W * .20)
 SOLAR_GEN_MAX = 5700  # Feb 2023 Record
 HVAC_W = 1500
 COFFEE_W = 1000
-BATTERY_AVAILABLE_W = RECOMMENDED_RESERVE_PACK_ENERGY_W + (DISCHARGE_MAX_W // 60) * 5
+BUFFER_WATT = (DISCHARGE_MAX_W // 60) * 5
+BATTERY_AVAILABLE_W = RECOMMENDED_RESERVE_PACK_ENERGY_W + BUFFER_WATT
 
 
 @mark.parametrize('energy_left_watts, reserved_pack_energy_watt, expected', {
@@ -23,8 +24,7 @@ def test_get_available_battery_power_watts(mocker, energy_left_watts, reserved_p
     mocker.patch('project.controllers.battery.BatteryModel.get_reserved_pack_energy',
                  return_value=reserved_pack_energy_watt)
     battery = Battery()
-
-    reserve_energy_watt = reserved_pack_energy_watt
+    reserve_energy_watt = reserved_pack_energy_watt + BUFFER_WATT
     available_battery_power_watts = battery.get_available_battery_power_watts()
     assert available_battery_power_watts == expected
     assert battery.features.get('reserve_energy_watt') == reserve_energy_watt

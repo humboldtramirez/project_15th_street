@@ -54,7 +54,5 @@ class Vehicle:
             if self.vehicle_model.is_charging_state_charging():
                 self.stop_charge()
 
-        return
-
 
 vehicle_controller = Vehicle()
