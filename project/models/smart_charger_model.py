@@ -19,7 +19,12 @@ class SmartChargerModel(db.Model):
         return result[-1]
 
     @classmethod
-    def insert_data(cls, amps, ai_model, features):
+    def set_amps(cls, amps, ai_model, features):
         new_data = SmartChargerModel(amps=amps, ai_model=ai_model, features=features)
         db.session.add(new_data)
         db.session.commit()
+
+    def get_amps(self) -> int:
+        result = self.select_last()
+        amps = result.amps
+        return amps

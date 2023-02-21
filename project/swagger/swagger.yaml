@@ -59,13 +59,13 @@ paths:
           schema:
             $ref: '#/definitions/dummy_msg'
       x-swagger-router-controller: "project.views.views"
-  /available-amps:
+  /battery-status:
     get:
       tags:
-      - "Amps View"
-      summary: "Gets available amps"
+      - "Battery View"
+      summary: "Gets Battery Status"
       description: ""
-      operationId: "get_available_amps"
+      operationId: "get_battery_status"
       consumes:
       - "application/json"
       produces:
@@ -76,13 +76,13 @@ paths:
           schema:
             $ref: '#/definitions/dummy_msg'
       x-swagger-router-controller: "project.views.views"
-  /get-charging-amps:
+  /manage-vehicle:
     get:
       tags:
-      - "Amps View"
-      summary: "Gets charging amps"
+      - "Vehicle View"
+      summary: "Manage Vehicle Charging"
       description: ""
-      operationId: "get_charging_amps"
+      operationId: "manage_vehicle"
       consumes:
       - "application/json"
       produces:

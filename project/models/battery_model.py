@@ -1,5 +1,5 @@
 import datetime
-from typing import Dict, Union
+from typing import Dict, Union, Optional, Tuple
 
 from sqlalchemy import Column, Integer, DateTime, JSON
 from project.models.init_db import db
@@ -37,22 +37,60 @@ class BatteryModel(db.Model):
         return power_reading
 
     def get_battery_power_watts(self) -> int:
-        # TODO:  max W discharged by battery = 4900?
-        energy_left = self.get_battery_data().get('energy_left', 0)
+        energy_left = self.get_power_reading().get('battery_power', 0)
+        return energy_left
+
+    def get_energy_left_watts(self) -> int:
+        energy_left = int(self.get_battery_data().get('energy_left', 0))
         return energy_left
 
     def get_grid_power_watt(self) -> int:
         grid_power_watts = self.get_power_reading().get('grid_power', 0)
         return grid_power_watts
 
-    def get_reserved_pack_energy(self) -> int:
+    def get_total_pack_energy(self) -> int:
         total_pack_energy = int(self.get_battery_data().get('total_pack_energy', 0))
-        print(f'total_pack_energy: {total_pack_energy}')
-        reserved_pack_energy_watt = total_pack_energy * self.get_backup_reserve_percent() / 100
-        return reserved_pack_energy_watt
+        return total_pack_energy
+
+    def get_reserved_pack_energy(self) -> int:
+        reserved_pack_energy_watt = self.get_total_pack_energy() * self.get_backup_reserve_percent() / 100
+        return int(reserved_pack_energy_watt)
 
     def get_backup_reserve_percent(self) -> int:
         backup = self.get_battery_data().get('backup')
-        backup_reserve_percent = backup.get('backup_reserve_percent', 0) if backup else 0
-        print(f'backup_reserve_percent: {backup_reserve_percent}')
-        return backup_reserve_percent
+        return backup.get('backup_reserve_percent', 0) if backup else 0
+
+    def get_solar_power_watts(self) -> int:
+        return self.get_power_reading().get('solar_power', 0)
+
+    def get_load_power(self) -> int:
+        return self.get_power_reading().get('load_power', 0)
+
+    def get_battery_capacity_watts(self) -> int:
+        return self.get_total_pack_energy() - self.get_energy_left_watts()
+
+    def get_remaining_charge_time(self) -> Optional[Tuple[int, int, int]]:
+        battery_capacity_watts = self.get_battery_capacity_watts()
+        battery_power_watts = self.get_battery_power_watts()
+        if battery_power_watts >= 0:
+            # Battery is on standby or discharging
+            return
+
+        remaining_h = battery_capacity_watts // abs(battery_power_watts)
+        remaining_m = battery_capacity_watts % abs(battery_power_watts) // 60
+        remaining_s = (battery_capacity_watts % battery_power_watts) % 60
+
+        return remaining_h, remaining_m, remaining_s
+
+    def get_remaining_discharge_time(self) -> Optional[Tuple[int, int, int]]:
+        energy_left_watts = self.get_energy_left_watts()
+        battery_power_watts = self.get_battery_power_watts()
+        if battery_power_watts <= 0:
+            # Battery is on standby or discharging
+            return
+
+        remaining_h = energy_left_watts // abs(battery_power_watts)
+        remaining_m = energy_left_watts % abs(battery_power_watts) // 60
+        remaining_s = (energy_left_watts % battery_power_watts) % 60
+
+        return remaining_h, remaining_m, remaining_s
