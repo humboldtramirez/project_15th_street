@@ -86,3 +86,7 @@ dist: clean ## builds source and wheel package
 
 install: clean ## install the package to the active Python's site-packages
 	python setup.py install
+
+run:
+	export PYMS_KEY_FILE=/Users/Jay/keys/project_15th_street.key
+	python manage.py runserver -p 5001
