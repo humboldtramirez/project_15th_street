@@ -68,6 +68,11 @@ optional arguments:
 -p 
 : port number.  default is 5000
 
+Alternatively:
+```bash
+make run
+```
+
 
 ## Check the result
 
