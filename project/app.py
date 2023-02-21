@@ -1,7 +1,6 @@
 import logging
 import logging.config
 
-from flask import Flask
 from pyms.flask.app import Microservice
 from project.models.init_db import db
 
@@ -18,7 +17,7 @@ class MyMicroservice(Microservice):
             super().init_logger()
         else:
             level = "DEBUG"
-            logging_config = {
+            LOGGING = {
                 'version': 1,
                 'disable_existing_loggers': False,
                 'handlers': {
@@ -51,13 +50,13 @@ class MyMicroservice(Microservice):
                 }
             }
 
-            logging.config.dictConfig(logging_config)
+            logging.config.dictConfig(LOGGING)
 
 
-def create_app() -> Flask:
-    """Initialize the Flask app, register blueprints and initialize all libraries like Swagger, database, the trace
-    system
-    :return: the app and the database objects
+def create_app() -> None:
+    """Initialize the Flask app, register blueprints and intialize all libraries like Swagger, database, the trace system...
+    return the app and the database objects.
+    :return:
     """
     ms = MyMicroservice(path=__file__)
     return ms.create_app()

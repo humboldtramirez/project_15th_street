@@ -1,23 +1,6 @@
-# Project 15th Street
-Project 15th Street is an MVP Flask Microservice Project to reduce the cost of importing electricity for homes with 
-solar and home energy storage solutions.
-
-This solution is intended to address the recent adoption of the [Net Billing Tariff (NEM 3.0)](https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/demand-side-management/net-energy-metering/nem-revisit/net-billing-tariff) 
-in California where the net metering compensation was reduced by about 75%.  In addition to NEM 3.0 changes, green 
-homes with solar panels, energy storage, and an electric vehicle (EV) already need to export about 3.7 times more 
-electricity to the grid than they import from the grid to break even (based on .2291/kWh import vs. .062/kWh export 
-rate).
-
-Another problem for green homes with a Tesla Powerwall and Tesla EV, is the disconnect between the two products.  For 
-example, a home can export surplus electricity when the Powerwall is full during the day and will import electricity to 
-charge their EV in the evening.  In the simplest case the kWh exported and imported could be equal but based on the 
-utility rate the owner will be charged for the balance of the imported electricity after the credit for the exported 
-electricity is applied. An owner can manually control when the EV charges and how many amps during the charge.  However,
-this is set independent of the Powerwall's current energy level and discharge rate and would require constant 
-monitoring to minimize unnecessary grid usage.
-
-# Architecture
-This microservice is built over [PyMS](https://github.com/python-microservices/pyms) package. PyMS is a [Microservice chassis pattern](https://microservices.io/patterns/microservice-chassis.html)
+# microservices-scaffold
+Python Microservice Scaffold is an example of how to structure a Flask Microservice Project.
+This scaffold is built over [PyMS](https://github.com/python-microservices/pyms) package. PyMS is a [Microservice chassis pattern](https://microservices.io/patterns/microservice-chassis.html)
 like Spring Boot (Java) or Gizmo (Golang). PyMS is a collection of libraries, best practices and recommended ways to build
 microservices with Python which handles cross-cutting concerns:
 - Externalized configuration
@@ -32,11 +15,8 @@ microservices with Python which handles cross-cutting concerns:
 [![Updates](https://pyup.io/repos/github/python-microservices/microservices-scaffold/shield.svg)](https://pyup.io/repos/github/python-microservices/microservices-scaffold/)
 [![Python 3](https://pyup.io/repos/github/python-microservices/microservices-scaffold/python-3-shield.svg)](https://pyup.io/repos/github/python-microservices/microservices-scaffold/)
 
-Dependencies:
-- Shares a mariaDB DB with another microservice leveraging https://github.com/tdorssers/TeslaPy to 
-pull battery and vehicle data.
 
-# How to run the microservice
+# How to run the scaffold
 
 ## Installation
 
@@ -64,9 +44,6 @@ For a more in-depth explanation please refer to  the [official documentation](ht
 ```bash
 python manage.py runserver
 ```
-optional arguments:
--p 
-: port number.  default is 5000
 
 
 ## Check the result
