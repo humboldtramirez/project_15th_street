@@ -1,9 +1,10 @@
+from http import HTTPStatus
+from threading import Thread
+from time import time
+
 from flask import current_app
 import requests
-from http import HTTPStatus
 from polling2 import is_value, poll, poll_decorator
-from time import time
-from threading import Thread
 
 from project.models.smart_charger_model import SmartChargerModel
 
@@ -19,7 +20,7 @@ class SmartChargerController:
     def get_charging_amps(self) -> int:
         return self.smart_charger_model.get_amps()
 
-    def set_charging_amps(self, amps, ai_model: str = 'scratch', features: dict = {}):
+    def set_charging_amps(self, amps, ai_model: str = 'scratch', features: dict = None):
         self.smart_charger_model.set_amps(amps, ai_model, features)
 
     @poll_decorator(step=30, poll_forever=True)
@@ -69,7 +70,6 @@ class SmartChargerController:
         poll(target=self.daemon.is_alive, step=1, poll_forever=True, check_success=is_value(False))
         end_time = time()
         print(f'Background task stopped in {end_time-start_time}s.')
-        return
 
 
 smart_charger_controller = SmartChargerController()
