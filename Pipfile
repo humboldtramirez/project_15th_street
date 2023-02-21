@@ -34,6 +34,7 @@ mypy = ">=0.790"
 pyparsing = "*"
 astroid = "*"
 isort = "*"
+pytest-mock = "*"
 
 [pipenv]
 allow_prereleases = true
