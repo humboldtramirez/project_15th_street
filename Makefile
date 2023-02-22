@@ -24,6 +24,8 @@ for line in sys.stdin:
 endef
 export PRINT_HELP_PYSCRIPT
 
+export PYMS_KEY_FILE=/Users/Jay/keys/project_15th_street.key
+
 BROWSER := python -c "$$BROWSER_PYSCRIPT"
 
 help:
@@ -55,7 +57,7 @@ lint: ## check style with pylint
 	pylint project/* > pylintReport.txt
 
 flake8: ## check style with flake8
-	flake8 project tests  > pyflake8tReport.txt
+	flake8 project tests  > flake8Report.txt
 
 test: ## run tests with py.test
 	py.test
@@ -88,5 +90,4 @@ install: clean ## install the package to the active Python's site-packages
 	python setup.py install
 
 run:
-	export PYMS_KEY_FILE=/Users/Jay/keys/project_15th_street.key
 	python manage.py runserver -p 5001
