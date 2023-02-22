@@ -7,6 +7,9 @@ import requests
 from polling2 import is_value, poll, poll_decorator
 
 from project.models.smart_charger_model import SmartChargerModel
+from pyms.flask.app import config
+
+DEFAULT_TIMEOUT = config().DEFAULT_TIMEOUT
 
 
 class SmartChargerController:
@@ -29,11 +32,21 @@ class SmartChargerController:
         Source: https://polling2.readthedocs.io/en/latest/examples.html#wrap-a-target-function-in-a-polling-decorator
         :return:
         """
-        requests.get('http://127.0.0.1:5000/project_10th_street/battery')
-        requests.get('http://127.0.0.1:5000/project_10th_street/vehicle')
-        requests.get('http://127.0.0.1:5001/project_15th_street/battery-status')
-        requests.get('http://127.0.0.1:5001/project_15th_street/set-charging-amps')
-        requests.get('http://127.0.0.1:5001/project_15th_street/manage-vehicle')
+        endpoint_name = None
+        try:
+            endpoint_name = 'battery'
+            requests.get('http://127.0.0.1:5000/project_10th_street/battery', timeout=DEFAULT_TIMEOUT)
+            endpoint_name = 'vehicle'
+            requests.get('http://127.0.0.1:5000/project_10th_street/vehicle', timeout=DEFAULT_TIMEOUT)
+            endpoint_name = 'battery-status'
+            requests.get('http://127.0.0.1:5001/project_15th_street/battery-status', timeout=DEFAULT_TIMEOUT)
+            endpoint_name = 'set-charging-amps'
+            requests.get('http://127.0.0.1:5001/project_15th_street/set-charging-amps', timeout=DEFAULT_TIMEOUT)
+            endpoint_name = 'manage-vehicle'
+            requests.get('http://127.0.0.1:5001/project_15th_street/manage-vehicle', timeout=DEFAULT_TIMEOUT)
+        except requests.exceptions.Timeout as e:
+            print(f'polling timeout error {endpoint_name}: {e}')
+
         return self.polling_disabled
 
     def start_polling(self):
