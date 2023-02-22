@@ -1,6 +1,9 @@
 import requests
+from pyms.flask.app import config
 
 from project.models.vehicle_model import VehicleModel
+
+DEFAULT_TIMEOUT = config().DEFAULT_TIMEOUT
 
 
 class Vehicle:
@@ -12,23 +15,23 @@ class Vehicle:
 
     @staticmethod
     def start_charge():
-        requests.get('http://127.0.0.1:5000/project_10th_street/start-charge')
+        requests.get('http://127.0.0.1:5000/project_10th_street/start-charge', timeout=DEFAULT_TIMEOUT)
 
     @staticmethod
     def stop_charge():
-        requests.get('http://127.0.0.1:5000/project_10th_street/stop-charge')
+        requests.get('http://127.0.0.1:5000/project_10th_street/stop-charge', timeout=DEFAULT_TIMEOUT)
 
     @staticmethod
     def sync_charging_amps():
-        requests.get('http://127.0.0.1:5000/project_10th_street/charging-amps')
+        requests.get('http://127.0.0.1:5000/project_10th_street/charging-amps', timeout=DEFAULT_TIMEOUT)
 
     @staticmethod
     def update_vehicle_data():
-        requests.get('http://127.0.0.1:5000/project_10th_street/vehicle')
+        requests.get('http://127.0.0.1:5000/project_10th_street/vehicle', timeout=DEFAULT_TIMEOUT)
 
     @staticmethod
     def wake_up():
-        requests.get('http://127.0.0.1:5000/project_10th_street/wake-up')
+        requests.get('http://127.0.0.1:5000/project_10th_street/wake-up', timeout=DEFAULT_TIMEOUT)
 
     def calculate_charging_amps(self, available_amps: int) -> int:
         self.features['available_amps'] = available_amps

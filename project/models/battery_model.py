@@ -14,12 +14,8 @@ class BatteryModel(db.Model):
     timestamp = Column(DateTime, default=datetime.datetime.now)
 
     @classmethod
-    def select_last(cls):
-        result = cls.query.all()
-        return result[-1]
-
-    def get_battery_data(self) -> str:
-        result = self.select_last()
+    def get_battery_data(cls) -> str:
+        result = cls.query.order_by(cls.timestamp.desc()).first()
         battery_data = result.data
         return battery_data
 

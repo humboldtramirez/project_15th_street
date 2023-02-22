@@ -56,7 +56,7 @@ def test_get_available_amps(mocker, solar_power_watts, available_battery_power_w
         param(None, None, None, -1, (1, 2, 3), None, ('Charging', '1:2:3'), id='Charging'),
         param(None, None, None, 1, None, (4, 5, 6), ('Discharging', '4:5:6'), id='Discharging'),
         param(None, None, None, 0, None, None, ('Standby', None), id='Standby'),
-})
+    })
 def test_get_status(mocker, total_pack_energy, energy_left_watts, battery_capacity_watts, battery_power_watts,
                     remaining_charge_time, remaining_discharge_time, expected):
     mocker.patch('project.controllers.battery.BatteryModel.get_total_pack_energy', return_value=total_pack_energy)
