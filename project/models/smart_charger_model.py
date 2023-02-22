@@ -14,17 +14,13 @@ class SmartChargerModel(db.Model):
     timestamp = Column(DateTime, default=datetime.datetime.now)
 
     @classmethod
-    def select_last(cls):
-        result = cls.query.all()
-        return result[-1]
-
-    @classmethod
     def set_amps(cls, amps, ai_model, features):
         new_data = SmartChargerModel(amps=amps, ai_model=ai_model, features=features)
         db.session.add(new_data)
         db.session.commit()
 
-    def get_amps(self) -> int:
-        result = self.select_last()
+    @classmethod
+    def get_amps(cls) -> str:
+        result = cls.query.order_by(cls.timestamp.desc()).first()
         amps = result.amps
         return amps

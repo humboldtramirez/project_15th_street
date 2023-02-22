@@ -17,12 +17,8 @@ class VehicleModel(db.Model):
     timestamp = Column(DateTime, default=datetime.datetime.now)
 
     @classmethod
-    def select_last(cls):
-        result = cls.query.all()
-        return result[-1]
-
-    def get_vehicle_data(self) -> str:
-        result = self.select_last()
+    def get_vehicle_data(cls) -> str:
+        result = cls.query.order_by(cls.timestamp.desc()).first()
         vehicle_data = result.data
         return vehicle_data
 

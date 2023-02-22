@@ -1,9 +1,10 @@
 import requests
-
-from project.models.vehicle_model import VehicleModel
 from pyms.flask.app import config
 
+from project.models.vehicle_model import VehicleModel
+
 DEFAULT_TIMEOUT = config().DEFAULT_TIMEOUT
+
 
 class Vehicle:
 

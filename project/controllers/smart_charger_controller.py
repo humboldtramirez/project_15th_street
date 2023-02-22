@@ -5,9 +5,9 @@ from time import time
 from flask import current_app
 import requests
 from polling2 import is_value, poll, poll_decorator
+from pyms.flask.app import config
 
 from project.models.smart_charger_model import SmartChargerModel
-from pyms.flask.app import config
 
 DEFAULT_TIMEOUT = config().DEFAULT_TIMEOUT
 

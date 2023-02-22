@@ -42,7 +42,7 @@ class ProjectTestCase(unittest.TestCase):
 
     @patch('project.views.views.battery_controller.get_status')
     def test_get_battery_status(self, mock_get_status):
-        mock_get_status.return_value={'status': 'Standby', 'time_remaining': None}
+        mock_get_status.return_value = {'status': 'Standby', 'time_remaining': None}
         response = self.client.get('/project_15th_street/battery-status')
         self.assertEqual(200, response.status_code)
 
