@@ -7,6 +7,15 @@ from project.models.init_db import db
 
 
 class MyMicroservice(Microservice):
+    """
+    Customized Microservice with init_libs and init_logger overrides.
+
+    Methods
+    -------
+    init_libs() -> None
+    init_logger() -> None
+    """
+
     def init_libs(self) -> None:
 
         db.init_app(self.application)
