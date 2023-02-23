@@ -60,7 +60,7 @@ pipenv install
 
 For a more in-depth explanation please refer to  the [official documentation](https://pipenv.readthedocs.io/en/latest/).
 
-## Run your python script
+## Start the service
 ```bash
 python manage.py runserver
 ```
@@ -73,12 +73,23 @@ Alternatively:
 make run
 ```
 
+### Start Polling
+This will pull the latest battery and vehicle data, calculate the new charging_amps, and manage the EV accordingly.
 
-## Check the result
+Curl
+```
+curl -X GET --header 'Accept: application/json' 'http://localhost:5001/project_15th_street/start-poll'
+```
+Request URL
+```
+http://localhost:5001/project_15th_street/start-poll
+```
+
+## Check the default endpoint
 
 Your default endpoints will be in this url:
 ```bash
-http://127.0.0.1:5000/project_15th_street/
+http://localhost:5000/project_15th_street/
 ```
 
 This URL is set in your `config.yml`:
@@ -94,7 +105,7 @@ pyms:
 
 You can access a [swagger ui](https://swagger.io/tools/swagger-ui/) in the next url:
 ```bash
-http://127.0.0.1:5000/project_15th_street/ui/
+http://localhost:5000/project_15th_street/ui/
 ```
 
 This PATH is set in your `config.yml`:
