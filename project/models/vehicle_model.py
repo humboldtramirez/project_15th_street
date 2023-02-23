@@ -47,6 +47,9 @@ class VehicleModel(db.Model):
     def get_charge_port_latch(self) -> str:
         return self.get_charge_state().get('charge_port_latch', '')
 
+    def get_battery_range(self) -> int:
+        return int(self.get_charge_state().get('battery_range', 0))
+
     def is_charging_state_charging(self) -> bool:
         charging_state = self.get_charging_state()
         return bool(charging_state == 'Charging')

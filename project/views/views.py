@@ -40,8 +40,8 @@ def set_charging_amps():
 
 
 def manage_vehicle():
-    vehicle_controller.manage_vehicle()
-    return jsonify({}), HTTPStatus.OK
+    result = vehicle_controller.manage_vehicle()
+    return jsonify({'manage_vehicle': result}), HTTPStatus.OK
 
 
 def start_poll():

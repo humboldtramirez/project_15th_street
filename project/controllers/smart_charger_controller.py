@@ -4,11 +4,10 @@ from typing import Any, Dict, Optional
 
 import requests
 from polling2 import is_value, poll, poll_decorator
-from pyms.flask.app import config
 
 from project.models.smart_charger_model import SmartChargerModel
 
-DEFAULT_TIMEOUT = config().DEFAULT_TIMEOUT
+DEFAULT_TIMEOUT = 5
 
 
 class SmartChargerController:

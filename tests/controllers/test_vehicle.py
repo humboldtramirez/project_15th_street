@@ -20,30 +20,41 @@ def test_calculate_charging_amps(mocker, available_amps, charger_actual_current,
     assert vehicle.calculate_charging_amps(available_amps) == expected
 
 
-@mark.parametrize('charging_amps, is_disconnected, is_stopped, is_charging, stop_charge, start_charge', {
-    param(0, None, None, True, True, False, id='stop charging'),
-    param(0, None, None, False, False, False, id='not charging no op'),
-    param(5, True, None, True, False, False, id='disconnected no op'),
-    param(5, False, False, True, False, False, id='sync only'),
-    param(5, False, True, False, False, True, id='start charging'),
-})
-def test_manage_vehicle(mocker, charging_amps, is_disconnected, is_stopped, is_charging, stop_charge, start_charge):
+@mark.parametrize(
+    'battery_range, charging_amps, is_disconnected, is_stopped, is_charging, stop_charge, start_charge',
+    {
+        param(None, None, True, None, None, False, False, id='disconnected. no op'),
+        param(None, None, False, False, False, False, False, id='wake up and sync only.  neither charging or stopped'),
+        param(60, 4, False, True, False, False, False, id='not enough amps to start charging'),
+        param(60, 5, False, True, False, False, False, id='enough battery range to avoid start charge'),
+        param(59, 5, False, True, False, False, True, id='below battery range.  start charging'),
+        param(None, 5, False, False, True, False, False, id='enough amps to avoid stopping charge'),
+        param(None, 4, False, False, True, True, False, id='not enough amps. stop charging'),
+    })
+def test_manage_vehicle(mocker, battery_range, charging_amps, is_disconnected, is_stopped, is_charging, stop_charge,
+                        start_charge):
     mocker.patch('project.controllers.vehicle.VehicleModel.is_charging_state_disconnected',
                  return_value=is_disconnected)
     mocker.patch('project.controllers.vehicle.VehicleModel.is_charging_state_stopped',
                  return_value=is_stopped)
     mocker.patch('project.controllers.vehicle.VehicleModel.is_charging_state_charging',
                  return_value=is_charging)
+    mocker.patch('project.controllers.vehicle.VehicleModel.get_battery_range', return_value=battery_range)
+    mock_wake_up = mocker.patch('project.controllers.vehicle.Vehicle.wake_up')
     mock_stop_charge = mocker.patch('project.controllers.vehicle.Vehicle.stop_charge')
     mock_start_charge = mocker.patch('project.controllers.vehicle.Vehicle.start_charge')
     mock_sync_charge = mocker.patch('project.controllers.vehicle.Vehicle.sync_charging_amps')
     vehicle = Vehicle()
     vehicle.charging_amps = charging_amps
     vehicle.manage_vehicle()
+
+    wake_up_call_count = 0 if is_disconnected else 1
+    assert mock_wake_up.call_count == wake_up_call_count
+
     stop_charge_call_count = 1 if stop_charge else 0
     assert mock_stop_charge.call_count == stop_charge_call_count
 
-    sync_charge_call_count = 1 if charging_amps >= 5 and not is_disconnected else 0
+    sync_charge_call_count = 0 if is_disconnected else 1
     assert mock_sync_charge.call_count == sync_charge_call_count
 
     start_charge_call_count = 1 if start_charge else 0
