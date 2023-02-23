@@ -45,8 +45,8 @@ def manage_vehicle():
 
 
 def start_poll():
-    status = smart_charger_controller.start_polling()
-    return jsonify({status.description: status.phrase}), status.value
+    smart_charger_controller.start_polling()
+    return jsonify({'start_poll': 'Success'}), HTTPStatus.OK
 
 
 def status_poll():
@@ -56,8 +56,12 @@ def status_poll():
 
 
 def stop_poll():
-    status = smart_charger_controller.stop_polling()
-    return jsonify({status.description: status.phrase}), status.value
+    msg = 'Stop polling smart_charger_controller'
+    current_app.logger.info(msg)
+    stop_duration_seconds = smart_charger_controller.stop_polling()
+    msg = f'Polling stopped in {stop_duration_seconds}s'
+    current_app.logger.info(msg)
+    return jsonify({'stop_poll': 'Success', 'stop_duration_seconds': stop_duration_seconds}), HTTPStatus.OK
 
 
 def search():

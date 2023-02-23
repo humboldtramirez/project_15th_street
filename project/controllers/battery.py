@@ -1,3 +1,5 @@
+from typing import Dict, Any
+
 from project.models.battery_model import BatteryModel
 
 RECEPTACLE_V = 240
@@ -7,20 +9,21 @@ MIN_W = 120  # Setting floor to run 120 W for 1 hour.
 
 
 class Battery:
+    """
+    Controller for the home energy storage system
+    """
 
     def __init__(self):
         self.battery_model = BatteryModel()
         self.features = {}
 
-    def get_available_battery_power_watts(self):
+    def get_available_battery_power_watts(self) -> int:
         """
-        Basic Mode:  Round down to the nearest absolute watt.
+        Get Watts available from the battery without consuming the reserved amount.  Available Watts is determined by
+        energy left on the battery, reserve amount, and a buffer amount.  The buffer amount prevents the system from
+        overestimating the available watts resulting in unnecessary import from the grid.
 
-        # Dryer Requirements:  240V, 30A or 7200W
-        # Washer Requirements: 120V, 10A or 1200W
-        # Laundry Req:  8.4kW
-        # AC Req: ?
-        # Powerwall Capacity:  13.5 kWh
+        :return: DISCHARGE_MAX_W if Watts from the battery is available else 0
         """
         energy_left_watts = self.battery_model.get_energy_left_watts()
         self.features['energy_left'] = energy_left_watts
@@ -38,7 +41,15 @@ class Battery:
         self.features['available_battery_power_watts'] = available_battery_power_watts
         return available_battery_power_watts
 
-    def get_available_amps(self):
+    def get_available_amps(self) -> int:
+        """
+        Get amps available (A) to charge EV without importing W from the grid.  'A' is based on Watts available
+        from solar generation and battery storage minus Watts from existing load and grid import.  If 'A' > 0
+        then the system can increase the EV's charging amps by 'A' without importing W from the grid.  If amps < 0 then
+        the system must decrease the EV's charging amps by 'A' or risk importing W from the grid.
+
+        :return: available amps
+        """
         solar_power_watts = self.battery_model.get_solar_power_watts()
         self.features['solar_power_watts'] = solar_power_watts
 
@@ -59,7 +70,15 @@ class Battery:
 
         return available_amp
 
-    def get_status(self):
+    def get_status(self) -> Dict[str, Any]:
+        """
+        Gets current status and time remaining for the battery.  Status of the battery is either 'Charging',
+        'Discharging', or 'Standby'.  Time remaining is the hours:minutes:seconds before the battery is done charging
+        or discharging depending on status.
+
+        :return: a dictionary containing the battery status and time remaining (h:m:s)
+        """
+
         # Remaining Calculations
         total_pack_energy = self.battery_model.get_total_pack_energy()
         self.features['total_pack_energy'] = total_pack_energy
