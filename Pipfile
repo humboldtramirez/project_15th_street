@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 Flask = "<2.0"
 markupsafe = "==2.0.1"
-openapi-spec-validator = "<0.5.0"
+openapi-spec-validator = "*"
 Flask-SQLAlchemy = ">=2.5"
 SQLAlchemy = "==1.4.3"
 Flask-Script = "==2.0.6"
@@ -14,10 +14,8 @@ py-ms = {extras = ["all"],version = "==2.7.0"}
 marshmallow = "==3.8.0"
 marshmallow-sqlalchemy = ">=0.24.2"
 importlib-metadata = "<4.3"
-prance = "<0.22"
 mariadb = "==1.0.11"
 polling2 = "*"
-jsonschema = "<3.0.0"
 
 [dev-packages]
 requests-mock = "*"

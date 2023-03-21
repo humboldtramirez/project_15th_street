@@ -11,6 +11,7 @@ RUN apt-get update \
         libssl-dev \
         build-essential \
         wget \
+        libmariadb3 \
     # Fix numpy compilation related to gcc
     && ln -s /usr/include/locale.h /usr/include/xlocale.h \
     # Cleanup
