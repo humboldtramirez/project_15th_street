@@ -1,9 +1,8 @@
 import requests
-from pyms.flask.app import config
 
 from project.models.vehicle_model import VehicleModel
 
-DEFAULT_TIMEOUT = config().DEFAULT_TIMEOUT
+DEFAULT_TIMEOUT = 5
 
 
 class Vehicle:
@@ -66,26 +65,31 @@ class Vehicle:
         self.features['charging_amps'] = self.charging_amps
         return self.charging_amps
 
-    def manage_vehicle(self):
+    def manage_vehicle(self) -> str:
         """
         Handles setting charging amps, start charging, or stop charging on EV depending on charging_amps and EV
         charge state.
-        :return: None
+        :return: result of handling
         """
         if self.vehicle_model.is_charging_state_disconnected():
-            return
+            return "EV Disconnected"
 
         # Wake-up EV to avoid losing connection after 60s
         self.wake_up()
 
-        if self.charging_amps >= 5:
-            self.sync_charging_amps()
+        self.sync_charging_amps()
 
-            if self.vehicle_model.is_charging_state_stopped():
+        if self.vehicle_model.is_charging_state_stopped():
+            if self.charging_amps >= 5 and self.vehicle_model.get_battery_range() < 60:
                 self.start_charge()
-        else:
-            if self.vehicle_model.is_charging_state_charging():
+                return "Start Charge"
+
+        if self.vehicle_model.is_charging_state_charging():
+            if self.charging_amps < 5:
                 self.stop_charge()
+                return "Stop Charge"
+
+        return "Set Charge Amps"
 
 
 vehicle_controller = Vehicle()
