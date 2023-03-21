@@ -27,8 +27,10 @@ ENV ENVIRONMENT=pre
 ENV APP_HOME=/microservice/
 ENV DATABASE_DIR=database
 ENV PYMS_CONFIGMAP_FILE="$APP_HOME"config-docker.yml
+ENV PYMS_KEY_FILE="$APP_HOME"project_15th_street.key
 
 COPY Pipfile* /tmp/
+COPY project_15th_street.key /tmp/
 
 # Install Project
 RUN mkdir $APP_HOME \

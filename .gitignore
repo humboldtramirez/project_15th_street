@@ -106,3 +106,4 @@ flake8Report.txt
 pylintReport.txt
 *.sqlite3
 _build
+*.key

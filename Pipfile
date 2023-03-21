@@ -15,8 +15,9 @@ marshmallow = "==3.8.0"
 marshmallow-sqlalchemy = ">=0.24.2"
 importlib-metadata = "<4.3"
 prance = "<0.22"
-mariadb = "*"
+mariadb = "==1.0.11"
 polling2 = "*"
+jsonschema = "<3.0.0"
 
 [dev-packages]
 requests-mock = "*"
